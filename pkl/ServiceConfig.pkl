@@ -3,8 +3,8 @@
 module o47monad.sercon.ServiceConfig
 
 import "package://pkg.pkl-lang.org/pkl-go/pkl.golang@0.8.0#/go.pkl"
-import "db/MongodbConfig.pkl"
-import "monitoring/PrometheusConfig.pkl"
+import "./db/MongodbConfig.pkl"
+import "./monitoring/PrometheusConfig.pkl"
 
 typealias Port = UInt16(this > 0)
 
