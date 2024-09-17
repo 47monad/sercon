@@ -21,7 +21,7 @@ func Load(opts ...LoadOption) (*svcconf.ServiceConfig, error) {
 		return nil, fmt.Errorf("missing config path")
 	}
 	if _opts.envPath != "" {
-		err := godotenv.Load()
+		err := godotenv.Load(_opts.envPath)
 		if err != nil {
 			return nil, err
 		}
