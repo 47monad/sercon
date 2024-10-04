@@ -5,10 +5,10 @@ module o47monad.sercon.ServiceConfig
 import "package://pkg.pkl-lang.org/pkl-go/pkl.golang@0.8.0#/go.pkl"
 import "./db/MongodbConfig.pkl"
 import "./monitoring/PrometheusConfig.pkl"
+import "./log/LogConfig.pkl"
+import "./GrpcConfig.pkl"
 
 typealias Port = UInt16(this > 0)
-
-typealias LogLevel = "debug"|"info"|"warn"|"error"|"fatal"
 
 name: String = ""
 version: String = ""
@@ -25,7 +25,15 @@ env: String = read?("env:ENV") ?? "production"
 
 debugMode: Boolean = read?("env:DEBUG_MODE")?.toBoolean() ?? false
 
-logLevel: LogLevel = "debug"
+log: LogConfig = new LogConfig {
+  level = let (lvl = read?("env:LOG_LEVEL")?.toString() ?? "error") lvl as LogConfig.Level
+}
+
+grpc: GrpcConfig? = new GrpcConfig {
+  healthCheckEnabled = read?("env:GRPC_HEALTH_CHECK_ENABLED")?.toBoolean() ?? true
+  reflectionEnabled = read?("env:GRPC_REFLECTION_ENABLED")?.toBoolean() ?? false
+  loggingEnabled = read?("env:GRPC_LOGGING_ENABLED")?.toBoolean() ?? true
+}
 
 mongodb: MongodbConfig? = new MongodbConfig {
   enabled = false

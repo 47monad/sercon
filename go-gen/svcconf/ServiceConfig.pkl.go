@@ -4,9 +4,10 @@ package svcconf
 import (
 	"context"
 
+	"github.com/47monad/sercon/go-gen/grpcconf"
+	"github.com/47monad/sercon/go-gen/logconf"
 	"github.com/47monad/sercon/go-gen/mongodbconf"
 	"github.com/47monad/sercon/go-gen/prometheusconf"
-	"github.com/47monad/sercon/go-gen/svcconf/loglevel"
 	"github.com/apple/pkl-go/pkl"
 )
 
@@ -23,7 +24,9 @@ type ServiceConfig struct {
 
 	DebugMode bool `pkl:"debugMode"`
 
-	LogLevel loglevel.LogLevel `pkl:"logLevel"`
+	Log *logconf.LogConfig `pkl:"log"`
+
+	Grpc *grpcconf.GrpcConfig `pkl:"grpc"`
 
 	Mongodb *mongodbconf.MongodbConfig `pkl:"mongodb"`
 

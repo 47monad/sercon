@@ -7,6 +7,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type Config svcconf.ServiceConfig
+
 type LoadOptions struct {
 	ctx        context.Context
 	configPath string
@@ -15,7 +17,7 @@ type LoadOptions struct {
 
 type LoadOption func(*LoadOptions)
 
-func Load(opts ...LoadOption) (*svcconf.ServiceConfig, error) {
+func Load(opts ...LoadOption) (*Config, error) {
 	_opts := prepareOptions(opts)
 	if _opts.configPath == "" {
 		return nil, fmt.Errorf("missing config path")
@@ -31,7 +33,7 @@ func Load(opts ...LoadOption) (*svcconf.ServiceConfig, error) {
 		return nil, err
 	}
 
-	return conf, nil
+	return (*Config)(conf), nil
 }
 
 func prepareOptions(options []LoadOption) *LoadOptions {
