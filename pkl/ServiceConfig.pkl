@@ -3,17 +3,16 @@
 module o47monad.sercon.ServiceConfig
 
 import "package://pkg.pkl-lang.org/pkl-go/pkl.golang@0.8.0#/go.pkl"
+import "./Common.pkl"
 import "./db/MongodbConfig.pkl"
 import "./monitoring/PrometheusConfig.pkl"
 import "./log/LogConfig.pkl"
 import "./GrpcConfig.pkl"
 
-typealias Port = UInt16(this > 0)
-
 name: String = ""
 version: String = ""
 
-ports: Mapping<String, Port> = new Mapping<String, Port> {
+ports: Mapping<String, Common.Port> = new Mapping<String, Common.Port> {
   ["port"] = read?("env:PORT")?.toInt() ?? 4746
   ["grpc"] = read?("env:GRPC_PORT")?.toInt() ?? 4747
   ["http"] = read?("env:HTTP_PORT")?.toInt() ?? 4749
@@ -30,9 +29,10 @@ log: LogConfig = new LogConfig {
 }
 
 grpc: GrpcConfig? = new GrpcConfig {
-  healthCheckEnabled = read?("env:GRPC_HEALTH_CHECK_ENABLED")?.toBoolean() ?? true
-  reflectionEnabled = read?("env:GRPC_REFLECTION_ENABLED")?.toBoolean() ?? false
-  loggingEnabled = read?("env:GRPC_LOGGING_ENABLED")?.toBoolean() ?? true
+  port = read?("env:GRPC_PORT")?.toInt() ?? 4747
+  useHealthCheck = read?("env:GRPC_USE_HEALTH_CHECK")?.toBoolean() ?? true
+  useReflection = read?("env:GRPC_USE_REFLECTION")?.toBoolean() ?? false
+  useLogging = read?("env:GRPC_USE_LOGGING")?.toBoolean() ?? true
 }
 
 mongodb: MongodbConfig? = new MongodbConfig {

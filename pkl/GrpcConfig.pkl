@@ -3,10 +3,12 @@
 module o47monad.sercon.GrpcConfig
 
 import "package://pkg.pkl-lang.org/pkl-go/pkl.golang@0.8.0#/go.pkl"
+import "./Common.pkl"
 
-reflectionEnabled: Boolean
+port: Common.Port
 
-healthCheckEnabled: Boolean
+useReflection: Boolean
 
-loggingEnabled: Boolean
+useHealthCheck: Boolean
 
+useLogging: Boolean

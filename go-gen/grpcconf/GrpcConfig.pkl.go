@@ -8,11 +8,13 @@ import (
 )
 
 type GrpcConfig struct {
-	ReflectionEnabled bool `pkl:"reflectionEnabled"`
+	Port uint16 `pkl:"port"`
 
-	HealthCheckEnabled bool `pkl:"healthCheckEnabled"`
+	UseReflection bool `pkl:"useReflection"`
 
-	LoggingEnabled bool `pkl:"loggingEnabled"`
+	UseHealthCheck bool `pkl:"useHealthCheck"`
+
+	UseLogging bool `pkl:"useLogging"`
 }
 
 // LoadFromPath loads the pkl module at the given path and evaluates it into a GrpcConfig
