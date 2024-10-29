@@ -8,13 +8,13 @@ import (
 )
 
 type MongodbConfig struct {
-	Enabled bool `pkl:"enabled"`
+	Enabled bool `pkl:"enabled" json:"enabled,omitempty"`
 
-	Uri *string `pkl:"uri"`
+	Uri *string `pkl:"uri" json:"uri,omitempty"`
 
-	DbName string `pkl:"dbName"`
+	DbName string `pkl:"dbName" json:"dbName,omitempty"`
 
-	UriBuilder *URIBuilder `pkl:"uriBuilder"`
+	UriBuilder *URIBuilder `pkl:"uriBuilder" json:"uriBuilder,omitempty"`
 }
 
 // LoadFromPath loads the pkl module at the given path and evaluates it into a MongodbConfig

@@ -2,5 +2,5 @@
 package mongodbconf
 
 type Options struct {
-	ReplicaSet string `pkl:"replicaSet"`
+	ReplicaSet string `pkl:"replicaSet" json:"replicaSet,omitempty"`
 }

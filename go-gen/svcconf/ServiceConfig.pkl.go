@@ -12,25 +12,25 @@ import (
 )
 
 type ServiceConfig struct {
-	Name string `pkl:"name"`
+	Name string `pkl:"name" json:"name,omitempty"`
 
-	Version string `pkl:"version"`
+	Version string `pkl:"version" json:"version,omitempty"`
 
-	Ports map[string]uint16 `pkl:"ports"`
+	Ports map[string]uint16 `pkl:"ports" json:"ports,omitempty"`
 
-	Host string `pkl:"host"`
+	Host string `pkl:"host" json:"host,omitempty"`
 
-	Env string `pkl:"env"`
+	Env string `pkl:"env" json:"env,omitempty"`
 
-	DebugMode bool `pkl:"debugMode"`
+	DebugMode bool `pkl:"debugMode" json:"debugMode,omitempty"`
 
-	Log *logconf.LogConfig `pkl:"log"`
+	Log *logconf.LogConfig `pkl:"log" json:"log,omitempty"`
 
-	Grpc *grpcconf.GrpcConfig `pkl:"grpc"`
+	Grpc *grpcconf.GrpcConfig `pkl:"grpc" json:"grpc,omitempty"`
 
-	Mongodb *mongodbconf.MongodbConfig `pkl:"mongodb"`
+	Mongodb *mongodbconf.MongodbConfig `pkl:"mongodb" json:"mongodb,omitempty"`
 
-	Prometheus *prometheusconf.PrometheusConfig `pkl:"prometheus"`
+	Prometheus *prometheusconf.PrometheusConfig `pkl:"prometheus" json:"prometheus,omitempty"`
 }
 
 // LoadFromPath loads the pkl module at the given path and evaluates it into a ServiceConfig

@@ -8,9 +8,9 @@ import (
 )
 
 type PrometheusConfig struct {
-	Enabled bool `pkl:"enabled"`
+	Enabled bool `pkl:"enabled" json:"enabled,omitempty"`
 
-	UseGrpcMetrics bool `pkl:"useGrpcMetrics"`
+	UseGrpcMetrics bool `pkl:"useGrpcMetrics" json:"useGrpcMetrics,omitempty"`
 }
 
 // LoadFromPath loads the pkl module at the given path and evaluates it into a PrometheusConfig

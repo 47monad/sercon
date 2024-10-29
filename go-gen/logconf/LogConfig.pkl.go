@@ -9,7 +9,7 @@ import (
 )
 
 type LogConfig struct {
-	Level level.Level `pkl:"level"`
+	Level level.Level `pkl:"level" json:"level,omitempty"`
 }
 
 // LoadFromPath loads the pkl module at the given path and evaluates it into a LogConfig
