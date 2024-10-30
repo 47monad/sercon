@@ -2,7 +2,10 @@ package sercon
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"os"
+
 	"github.com/47monad/sercon/go-gen/svcconf"
 	"github.com/joho/godotenv"
 )
@@ -64,4 +67,20 @@ func WithEnvPath(path string) LoadOption {
 	return func(o *LoadOptions) {
 		o.envPath = path
 	}
+}
+
+func LoadFromRelay(opts ...LoadOption) (*Config, error) {
+	_opts := prepareOptions(opts)
+
+	bt, err := os.ReadFile(_opts.configPath)
+	if err != nil {
+		return nil, err
+	}
+
+	var conf *Config
+	if err := json.Unmarshal(bt, &conf); err != nil {
+		return nil, err
+	}
+
+	return conf, nil
 }
