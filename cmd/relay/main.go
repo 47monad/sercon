@@ -21,9 +21,7 @@ func main() {
 
 	flag.Parse()
 
-	err := relay.Create(&relay.Options{
-		BasePath: basePath,
-	})
+	err := relay.Create(relay.WithBasePath(basePath))
 
 	if err != nil {
 		panic(err)

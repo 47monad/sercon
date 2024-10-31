@@ -12,27 +12,67 @@ import (
 )
 
 type Options struct {
-	BasePath string
-	PKLName  string
-	EnvName  string
-	Output   string
+	BasePath       string
+	PKLPath        string
+	EnvPath        string
+	Output         string
+	fullPKLPath    string
+	fullEnvPath    string
+	fullOutputPath string
 }
 
-func Create(opts *Options) error {
-	pklPath := fmt.Sprintf("%s/%s", opts.BasePath, "app.pkl")
-	envPath := fmt.Sprintf("%s/%s", opts.BasePath, ".env")
-	outputPath := fmt.Sprintf("%s/%s", opts.BasePath, "app.json")
+type Option func(*Options)
 
-	if err := LoadEnv(envPath); err != nil {
+func WithBasePath(path string) Option {
+	return func(opts *Options) {
+		opts.BasePath = path
+	}
+}
+
+func WithPKLPath(path string) Option {
+	return func(opts *Options) {
+		opts.BasePath = path
+	}
+}
+
+func WithEnvPath(path string) Option {
+	return func(opts *Options) {
+		opts.BasePath = path
+	}
+}
+
+func WithOutputPath(path string) Option {
+	return func(opts *Options) {
+		opts.BasePath = path
+	}
+}
+
+func Create(opts ...Option) error {
+	_opts := &Options{
+		BasePath: "./config",
+		PKLPath:  "app.pkl",
+		EnvPath:  ".env",
+		Output:   "build/app.json",
+	}
+
+	for _, opt := range opts {
+		opt(_opts)
+	}
+
+	_opts.fullEnvPath = fmt.Sprintf("%s/%s", _opts.BasePath, _opts.EnvPath)
+	_opts.fullPKLPath = fmt.Sprintf("%s/%s", _opts.BasePath, _opts.PKLPath)
+	_opts.fullOutputPath = fmt.Sprintf("%s/%s", _opts.BasePath, _opts.Output)
+
+	if err := LoadEnv(_opts.fullEnvPath); err != nil {
 		return err
 	}
 
-	conf, err := LoadConfig(pklPath)
+	conf, err := LoadConfig(_opts.fullPKLPath)
 	if err != nil {
 		return err
 	}
 
-	if err := WriteToJson(conf, outputPath); err != nil {
+	if err := WriteToJson(conf, _opts.fullOutputPath); err != nil {
 		return err
 	}
 
