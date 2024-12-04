@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"os"
+	"path/filepath"
 
 	"github.com/47monad/sercon/go-gen/svcconf"
 	"github.com/apple/pkl-go/pkl"
@@ -41,6 +42,10 @@ func WriteToJson(c *svcconf.ServiceConfig, outputPath string) error {
 		return err
 	}
 
+	dirPath := filepath.Dir(outputPath)
+	if dirPath != "." && dirPath != "/" {
+		os.MkdirAll(dirPath, os.ModePerm)
+	}
 	file, err := os.Create(outputPath)
 	if err != nil {
 		return err
