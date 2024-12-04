@@ -3,26 +3,23 @@ package main
 import (
 	"flag"
 
-	"github.com/47monad/sercon/relay"
+	"github.com/47monad/sercon"
 )
 
 func main() {
 	var (
-		basePath string
-		pklName  string
-		envName  string
-		output   string
+		pklPath    string
+		envPath    string
+		outputPath string
 	)
 
-	flag.StringVar(&basePath, "base-path", "", "base path")
-	flag.StringVar(&pklName, "pkl-file", "", "pkl file name")
-	flag.StringVar(&envName, "env-file", "", "env file name")
-	flag.StringVar(&output, "output", "", "output file name")
+	flag.StringVar(&pklPath, "pkl", "", "pkl file name")
+	flag.StringVar(&envPath, "env", "", "env file name")
+	flag.StringVar(&outputPath, "output", "", "output file name")
 
 	flag.Parse()
 
-	err := relay.Create(relay.WithBasePath(basePath))
-
+	err := sercon.Build(pklPath, outputPath, envPath)
 	if err != nil {
 		panic(err)
 	}

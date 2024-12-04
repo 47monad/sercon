@@ -1,9 +1,8 @@
-package relay
+package sercon
 
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/47monad/sercon/go-gen/svcconf"
@@ -11,68 +10,17 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type Options struct {
-	BasePath       string
-	PKLPath        string
-	EnvPath        string
-	Output         string
-	fullPKLPath    string
-	fullEnvPath    string
-	fullOutputPath string
-}
-
-type Option func(*Options)
-
-func WithBasePath(path string) Option {
-	return func(opts *Options) {
-		opts.BasePath = path
-	}
-}
-
-func WithPKLPath(path string) Option {
-	return func(opts *Options) {
-		opts.BasePath = path
-	}
-}
-
-func WithEnvPath(path string) Option {
-	return func(opts *Options) {
-		opts.BasePath = path
-	}
-}
-
-func WithOutputPath(path string) Option {
-	return func(opts *Options) {
-		opts.BasePath = path
-	}
-}
-
-func Create(opts ...Option) error {
-	_opts := &Options{
-		BasePath: "./config",
-		PKLPath:  "app.pkl",
-		EnvPath:  ".env",
-		Output:   "build/app.json",
-	}
-
-	for _, opt := range opts {
-		opt(_opts)
-	}
-
-	_opts.fullEnvPath = fmt.Sprintf("%s/%s", _opts.BasePath, _opts.EnvPath)
-	_opts.fullPKLPath = fmt.Sprintf("%s/%s", _opts.BasePath, _opts.PKLPath)
-	_opts.fullOutputPath = fmt.Sprintf("%s/%s", _opts.BasePath, _opts.Output)
-
-	if err := LoadEnv(_opts.fullEnvPath); err != nil {
+func Build(pklPath string, outputPath string, envPath string) error {
+	if err := LoadEnv(envPath); err != nil {
 		return err
 	}
 
-	conf, err := LoadConfig(_opts.fullPKLPath)
+	conf, err := LoadConfig(pklPath)
 	if err != nil {
 		return err
 	}
 
-	if err := WriteToJson(conf, _opts.fullOutputPath); err != nil {
+	if err := WriteToJson(conf, outputPath); err != nil {
 		return err
 	}
 
