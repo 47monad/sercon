@@ -38,7 +38,7 @@ grpc: GrpcConfig? = new GrpcConfig {
 mongodb: MongodbConfig? = new MongodbConfig {
   enabled = false
   uri = read?("env:MONGO_URI")
-  dbName = read("env:MONGO_DB").toString()
+  dbName = read?("env:MONGO_DB").toString()
 }
 
 prometheus: PrometheusConfig = new PrometheusConfig {
