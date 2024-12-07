@@ -1,0 +1,4 @@
+amends "../pkl/ServiceConfig.pkl"
+
+name = "TestWriterApp"
+version = "0.1.1"
