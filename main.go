@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/47monad/sercon"
+	sercon "github.com/47monad/sercon/lib"
 )
 
 func main() {
